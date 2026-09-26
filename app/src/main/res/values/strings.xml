@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">CompraSegura</string>
+
+    <!-- Login -->
+    <string name="login_titulo">Iniciar sesión</string>
+    <string name="login_correo">Correo</string>
+    <string name="login_password">Contraseña</string>
+    <string name="login_entrar">Entrar</string>
+
+    <!-- Catalogo -->
+    <string name="catalogo_buscar">Buscar productos</string>
+    <string name="catalogo_vacio">No hay productos que coincidan.</string>
+    <string name="catalogo_vendedor">Vendido por %1$s</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
+
+    <string name="error_generico">Ocurrió un error. Intenta de nuevo.</string>
+</resources>

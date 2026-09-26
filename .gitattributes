@@ -1,0 +1,13 @@
+# Finales de linea consistentes entre Windows, Mac y Linux (CI)
+* text=auto eol=lf
+
+# Scripts de Windows necesitan CRLF
+*.bat text eol=crlf
+
+# Binarios: nunca tocar
+*.jar binary
+*.png binary
+*.webp binary
+*.jpg binary
+*.keystore binary
+*.jks binary

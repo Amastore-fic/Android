@@ -1,0 +1,17 @@
+stages:
+  - build
+
+# Este job NO necesita el runner del servidor -- compilar Android requiere el
+# SDK de Android. Usa cualquier runner con executor Docker disponible.
+build_apk:
+  stage: build
+  image: mingc/android-build-box:latest
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "dev"'
+  script:
+    - chmod +x ./gradlew
+    - ./gradlew testDebugUnitTest assembleDebug
+  artifacts:
+    paths:
+      - app/build/outputs/apk/debug/*.apk
+    expire_in: 4 weeks
