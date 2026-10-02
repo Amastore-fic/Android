@@ -124,6 +124,20 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="16dp"
                     android:visibility="invisible" />
+
+                <TextView
+                    android:id="@+id/botonIrARegistro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:text="¿No tienes cuenta? Crea una"
+                    android:textColor="@color/primary"
+                    android:textSize="13sp"
+                    android:padding="4dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>

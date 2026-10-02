@@ -22,6 +22,12 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+
+// todo: Tambien descomenta esto cuando se agrega el register
+/*
+import com.example.comprasegura.data.remote.dto.RegistroPeticion
+*/
+
 // Endpoints de /api/v1 que usa el cliente (comprador). La app Android no cubre
 // las funciones de vendedor ni de administrador; esas viven en el panel web.
 interface ApiService {
@@ -29,6 +35,13 @@ interface ApiService {
     // ---- Autenticacion ----
     @POST("auth/login")
     suspend fun login(@Body peticion: LoginPeticion): LoginRespuesta
+
+
+    // todo: Cuando se agregue el registro quita este comentario
+    /*
+    @POST("auth/registro")
+    suspend fun registrar(@Body peticion: RegistroPeticion): LoginRespuesta
+    */
 
     @POST("auth/logout")
     suspend fun logout(): MensajeRespuesta

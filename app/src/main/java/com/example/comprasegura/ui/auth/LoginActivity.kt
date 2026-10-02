@@ -42,6 +42,10 @@ class LoginActivity : AppCompatActivity() {
             )
         }
 
+        binding.botonIrARegistro.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.estado.collect { estado ->
