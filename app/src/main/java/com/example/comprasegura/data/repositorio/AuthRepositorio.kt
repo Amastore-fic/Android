@@ -7,6 +7,11 @@ import com.example.comprasegura.data.remote.dto.LoginPeticion
 import com.example.comprasegura.data.remote.dto.UsuarioDto
 import com.example.comprasegura.data.sesion.SesionManager
 
+// todo: ya sabes descomenta esto cuando se agregue register()
+/*
+import com.example.comprasegura.data.remote.dto.RegistroPeticion
+*/
+
 class AuthRepositorio(
     private val api: ApiService,
     private val sesion: SesionManager,
@@ -28,6 +33,21 @@ class AuthRepositorio(
             }
         }
     }
+
+    // todo: Metodo para registrar al cliente, recuerda descomentarlo.
+    /*
+    suspend fun registrar(nombre: String, correo: String, password: String): Resultado<UsuarioDto> {
+        val resultado = llamarApi { api.registrar(RegistroPeticion(nombre.trim(), correo.trim(), password)) }
+        return when (resultado) {
+            is Resultado.Error -> resultado
+            is Resultado.Exito -> {
+                val usuario = resultado.datos.usuario
+                sesion.guardar(resultado.datos.token, usuario.nombre, usuario.rol)
+                Resultado.Exito(usuario)
+            }
+        }
+    }
+    */
 
     suspend fun logout() {
         llamarApi { api.logout() }
