@@ -13,6 +13,7 @@ import com.example.comprasegura.data.remote.dto.MensajeRespuesta
 import com.example.comprasegura.data.remote.dto.Pagina
 import com.example.comprasegura.data.remote.dto.PedidoDto
 import com.example.comprasegura.data.remote.dto.ProductoDto
+import com.example.comprasegura.data.remote.dto.RegistroPeticion
 import com.example.comprasegura.data.remote.dto.UsuarioDto
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -29,6 +30,9 @@ interface ApiService {
     // ---- Autenticacion ----
     @POST("auth/login")
     suspend fun login(@Body peticion: LoginPeticion): LoginRespuesta
+
+    @POST("auth/registro")
+    suspend fun registrar(@Body peticion: RegistroPeticion): LoginRespuesta
 
     @POST("auth/logout")
     suspend fun logout(): MensajeRespuesta

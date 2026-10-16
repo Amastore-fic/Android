@@ -31,11 +31,19 @@ class LoginActivity : AppCompatActivity() {
             insets
         }
 
+        binding.botonVolver.setOnClickListener {
+            finish() // Cierra el login y regresa al catálogo que está detrás
+        }
+
         binding.botonEntrar.setOnClickListener {
             viewModel.iniciarSesion(
                 binding.campoCorreo.text.toString(),
                 binding.campoPassword.text.toString(),
             )
+        }
+
+        binding.botonIrARegistro.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
 
         lifecycleScope.launch {
@@ -47,7 +55,6 @@ class LoginActivity : AppCompatActivity() {
                     binding.textoError.visibility = if (estado.error != null) View.VISIBLE else View.GONE
 
                     if (estado.exito) {
-                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         finish()
                     }
                 }

@@ -19,8 +19,9 @@ import com.example.comprasegura.ui.auth.LoginActivity
 import com.example.comprasegura.ui.catalogo.CatalogoViewModel
 import com.example.comprasegura.ui.catalogo.ProductoAdapter
 import kotlinx.coroutines.launch
+import com.example.comprasegura.ui.producto.ProductoActivity
 
-// Pantalla de entrada: catalogo. Si no hay sesion, manda al login.
+// Pantalla de entrada: catalogo publico. El login solo es obligatorio para comprar.
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -28,11 +29,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (!SesionManager(this).haySesion) {
-            irALogin()
-            return
-        }
 
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -44,13 +40,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         val adapter = ProductoAdapter { producto ->
-            // TODO: abrir ficha del producto (ui/producto) con vendedor, existencias y calificaciones
-            Toast.makeText(this, producto.titulo, Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ProductoActivity::class.java)
+            intent.putExtra("producto_id", producto.id)
+            startActivity(intent)
         }
         binding.listaProductos.adapter = adapter
 
         binding.campoBuscar.doAfterTextChanged { viewModel.buscar(it?.toString()) }
-        binding.botonSalir.setOnClickListener { viewModel.cerrarSesion { irALogin() } }
+
+        // Se llama aquí para configurar el botón la primera vez
+        actualizarBotonSesion()
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -66,8 +65,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun irALogin() {
+    // Se ejecuta cada vez que la pantalla vuelve a estar visible
+    override fun onResume() {
+        super.onResume()
+        actualizarBotonSesion()
+    }
+
+    // Función que ajusta el texto y la acción del botón según la sesión
+    private fun actualizarBotonSesion() {
+        if (SesionManager(this).haySesion) {
+            binding.botonSalir.text = "Cerrar Sesión"
+            binding.botonSalir.setOnClickListener {
+                viewModel.cerrarSesion { goToLogin() }
+            }
+        } else {
+            binding.botonSalir.text = "Iniciar Sesión"
+            binding.botonSalir.setOnClickListener { goToLogin() }
+        }
+    }
+
+    private fun goToLogin() {
         startActivity(Intent(this, LoginActivity::class.java))
-        finish()
     }
 }
