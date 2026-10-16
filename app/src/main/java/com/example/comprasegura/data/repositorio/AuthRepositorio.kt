@@ -4,13 +4,9 @@ import com.example.comprasegura.data.Resultado
 import com.example.comprasegura.data.llamarApi
 import com.example.comprasegura.data.remote.ApiService
 import com.example.comprasegura.data.remote.dto.LoginPeticion
+import com.example.comprasegura.data.remote.dto.RegistroPeticion
 import com.example.comprasegura.data.remote.dto.UsuarioDto
 import com.example.comprasegura.data.sesion.SesionManager
-
-// todo: ya sabes descomenta esto cuando se agregue register()
-/*
-import com.example.comprasegura.data.remote.dto.RegistroPeticion
-*/
 
 class AuthRepositorio(
     private val api: ApiService,
@@ -34,10 +30,25 @@ class AuthRepositorio(
         }
     }
 
-    // todo: Metodo para registrar al cliente, recuerda descomentarlo.
-    /*
-    suspend fun registrar(nombre: String, correo: String, password: String): Resultado<UsuarioDto> {
-        val resultado = llamarApi { api.registrar(RegistroPeticion(nombre.trim(), correo.trim(), password)) }
+    suspend fun registrar(
+        nombre: String,
+        apellido: String,
+        correo: String,
+        password: String,
+        confirmar: String,
+    ): Resultado<UsuarioDto> {
+        val resultado = llamarApi {
+            api.registrar(
+                RegistroPeticion(
+                    nombre = nombre.trim(),
+                    apellido = apellido.trim(),
+                    correo = correo.trim(),
+                    password = password,
+                    password_confirmation = confirmar,
+                    dispositivo = "android",
+                )
+            )
+        }
         return when (resultado) {
             is Resultado.Error -> resultado
             is Resultado.Exito -> {
@@ -47,7 +58,6 @@ class AuthRepositorio(
             }
         }
     }
-    */
 
     suspend fun logout() {
         llamarApi { api.logout() }

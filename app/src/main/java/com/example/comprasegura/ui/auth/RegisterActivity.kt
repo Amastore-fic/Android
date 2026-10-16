@@ -14,7 +14,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.comprasegura.MainActivity
 import com.example.comprasegura.databinding.ActivityRegisterBinding
 import kotlinx.coroutines.launch
-
+import android.widget.Toast
+import com.example.comprasegura.util.PasswordGenerator
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
@@ -48,10 +49,23 @@ class RegisterActivity : AppCompatActivity() {
         binding.botonRegistrar.setOnClickListener {
             viewModel.registrar(
                 nombre = binding.campoNombre.text.toString(),
+                apellido = binding.campoApellido.text.toString(),
                 correo = binding.campoCorreo.text.toString(),
                 password = binding.campoPassword.text.toString(),
                 confirmar = binding.campoConfirmar.text.toString(),
             )
+        }
+
+        // Botón para generar contraseña segura
+        binding.botonGenerarPassword.setOnClickListener {
+            val passwordGenerada = PasswordGenerator.generar()
+            binding.campoPassword.setText(passwordGenerada)
+            binding.campoConfirmar.setText(passwordGenerada)
+            Toast.makeText(
+                this,
+                "Contraseña generada. Toca el ojo para verla.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         // Observar el estado
@@ -63,8 +77,11 @@ class RegisterActivity : AppCompatActivity() {
                     binding.textoError.text = estado.error
                     binding.textoError.visibility = if (estado.error != null) View.VISIBLE else View.GONE
 
-                    // Si el registro fue exitoso, cerramos y regresamos al catalogo
+                    // Registro exitoso → volvemos al catálogo ya logueados
                     if (estado.exito) {
+                        val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                        startActivity(intent)
                         finish()
                     }
                 }

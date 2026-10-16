@@ -27,12 +27,13 @@ class RegisterViewModel(app: Application) : AndroidViewModel(app) {
 
     fun registrar(
         nombre: String,
+        apellido: String,
         correo: String,
         password: String,
         confirmar: String,
     ) {
-        // Validaciones locales
-        if (nombre.isBlank() || correo.isBlank() || password.isBlank() || confirmar.isBlank()) {
+        // Validaciones locales (alineadas con el backend)
+        if (nombre.isBlank() || apellido.isBlank() || correo.isBlank() || password.isBlank() || confirmar.isBlank()) {
             _estado.value = RegisterEstado(error = "Completa todos los campos")
             return
         }
@@ -44,24 +45,26 @@ class RegisterViewModel(app: Application) : AndroidViewModel(app) {
             _estado.value = RegisterEstado(error = "La contraseña debe tener al menos 8 caracteres")
             return
         }
+        if (!password.any { it.isLetter() }) {
+            _estado.value = RegisterEstado(error = "La contraseña debe incluir al menos una letra")
+            return
+        }
+        if (!password.any { it.isDigit() }) {
+            _estado.value = RegisterEstado(error = "La contraseña debe incluir al menos un número")
+            return
+        }
         if (password != confirmar) {
             _estado.value = RegisterEstado(error = "Las contraseñas no coinciden")
             return
         }
 
-        // Si esta bien se llama el backend
+        // Llamada al backend
         _estado.value = RegisterEstado(cargando = true)
         viewModelScope.launch {
-            // TODO: Cuando el AuthRepositorio tenga el método registrar(), descomentar esto:
-            /*
-            _estado.value = when (val r = repositorio.registrar(nombre, correo, password)) {
+            _estado.value = when (val r = repositorio.registrar(nombre, apellido, correo, password, confirmar)) {
                 is Resultado.Exito -> RegisterEstado(exito = true)
                 is Resultado.Error -> RegisterEstado(error = r.mensaje)
             }
-            */
-
-            // El backend no esta listo asi que mandamos un mensajito
-            _estado.value = RegisterEstado(error = "El registro aún no está disponible. Intenta más tarde.")
         }
     }
 }

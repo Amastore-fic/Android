@@ -19,6 +19,7 @@ import com.example.comprasegura.ui.auth.LoginActivity
 import com.example.comprasegura.ui.catalogo.CatalogoViewModel
 import com.example.comprasegura.ui.catalogo.ProductoAdapter
 import kotlinx.coroutines.launch
+import com.example.comprasegura.ui.producto.ProductoActivity
 
 // Pantalla de entrada: catalogo publico. El login solo es obligatorio para comprar.
 class MainActivity : AppCompatActivity() {
@@ -39,8 +40,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         val adapter = ProductoAdapter { producto ->
-            // TODO: abrir ficha del producto (ui/producto) con vendedor, existencias y calificaciones
-            Toast.makeText(this, producto.titulo, Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ProductoActivity::class.java)
+            intent.putExtra("producto_id", producto.id)
+            startActivity(intent)
         }
         binding.listaProductos.adapter = adapter
 
