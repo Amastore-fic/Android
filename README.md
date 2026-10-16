@@ -1,4 +1,4 @@
-# CompraSegura · Android
+# Amastore · Android
 
 App nativa en Kotlin (Views + Material 3) para el **cliente (comprador)**. Las funciones de vendedor y administrador viven solo en el panel web.
 
