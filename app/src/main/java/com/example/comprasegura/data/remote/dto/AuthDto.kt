@@ -8,14 +8,14 @@ data class LoginPeticion(
     val dispositivo: String = "android",
 )
 
-// todo: Tambien descomenta esto para el register (Checar bien cual es la respuesta)
-/*
 data class RegistroPeticion(
     val nombre: String,
+    val apellido: String,
     val correo: String,
     val password: String,
+    val password_confirmation: String,
+    val dispositivo: String = "android",
 )
-*/
 
 data class LoginRespuesta(
     val token: String,

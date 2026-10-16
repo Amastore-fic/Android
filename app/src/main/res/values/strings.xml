@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CompraSegura</string>
+    <string name="app_name">Amastore</string>
 
     <!-- Login -->
     <string name="login_titulo">Iniciar sesión</string>
