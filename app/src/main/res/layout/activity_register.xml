@@ -15,14 +15,14 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <!-- Botón para volver al catalogo -->
+        <!-- Regresa al perfil que abrió esta pantalla. -->
         <Button
             android:id="@+id/botonVolver"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Volver al catálogo"
+            android:text="Volver al perfil"
             android:textStyle="bold"
             android:textColor="@color/primary_light" />
 

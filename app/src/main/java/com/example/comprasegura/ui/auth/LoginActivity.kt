@@ -11,8 +11,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.comprasegura.MainActivity
 import com.example.comprasegura.databinding.ActivityLoginBinding
+import com.example.comprasegura.ui.perfil.PerfilActivity
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
@@ -32,7 +32,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.botonVolver.setOnClickListener {
-            finish() // Cierra el login y regresa al catálogo que está detrás
+            // Regresa a la pantalla que abrió el login (PerfilActivity).
+            finish()
         }
 
         binding.botonEntrar.setOnClickListener {
@@ -55,10 +56,18 @@ class LoginActivity : AppCompatActivity() {
                     binding.textoError.visibility = if (estado.error != null) View.VISIBLE else View.GONE
 
                     if (estado.exito) {
-                        finish()
+                        volverAlPerfil()
                     }
                 }
             }
         }
+    }
+
+    private fun volverAlPerfil() {
+        val intent = Intent(this, PerfilActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        }
+        startActivity(intent)
+        finish()
     }
 }

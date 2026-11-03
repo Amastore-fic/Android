@@ -3,11 +3,12 @@ package com.example.comprasegura.data.sesion
 import android.content.Context
 import androidx.core.content.edit
 
-// Guarda el token Bearer y los datos basicos del usuario en SharedPreferences.
 class SesionManager(context: Context) {
 
-    private val prefs = context.applicationContext
-        .getSharedPreferences("comprasegura_sesion", Context.MODE_PRIVATE)
+    private val prefs = context.applicationContext.getSharedPreferences(
+        "comprasegura_sesion",
+        Context.MODE_PRIVATE
+    )
 
     val token: String?
         get() = prefs.getString(CLAVE_TOKEN, null)
@@ -15,10 +16,17 @@ class SesionManager(context: Context) {
     val nombreUsuario: String?
         get() = prefs.getString(CLAVE_NOMBRE, null)
 
-    val haySesion: Boolean
-        get() = token != null
+    val rolUsuario: String?
+        get() = prefs.getString(CLAVE_ROL, null)
 
-    fun guardar(token: String, nombre: String, rol: String) {
+    val haySesion: Boolean
+        get() = !token.isNullOrBlank()
+
+    fun guardar(
+        token: String,
+        nombre: String,
+        rol: String
+    ) {
         prefs.edit {
             putString(CLAVE_TOKEN, token)
             putString(CLAVE_NOMBRE, nombre)
@@ -27,7 +35,9 @@ class SesionManager(context: Context) {
     }
 
     fun cerrar() {
-        prefs.edit { clear() }
+        prefs.edit {
+            clear()
+        }
     }
 
     private companion object {

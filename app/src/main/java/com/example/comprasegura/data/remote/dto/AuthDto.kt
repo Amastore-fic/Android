@@ -1,7 +1,5 @@
 package com.example.comprasegura.data.remote.dto
 
-// Los nombres de campo respetan el snake_case que devuelve la API.
-
 data class LoginPeticion(
     val correo: String,
     val password: String,
@@ -30,6 +28,32 @@ data class UsuarioDto(
     val correo: String,
     val rol: String,
     val activo: Boolean,
+    val telefono: String? = null,
+    val vendedor: VendedorPerfilDto? = null,
+)
+
+data class VendedorPerfilDto(
+    val id: Long? = null,
+    val nombre_comercial: String? = null,
+    val codigo_vendedor: String? = null,
+    val sucursal: String? = null,
+    val descripcion: String? = null,
+)
+
+data class ActualizarPerfilPeticion(
+    val nombre: String,
+    val apellido: String,
+    val correo: String,
+    val telefono: String? = null,
+    val nombre_comercial: String? = null,
+    val sucursal: String? = null,
+    val descripcion: String? = null,
+)
+
+data class CambiarPasswordPeticion(
+    val password_actual: String,
+    val password: String,
+    val password_confirmation: String,
 )
 
 data class MensajeRespuesta(

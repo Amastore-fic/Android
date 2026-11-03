@@ -37,6 +37,10 @@
         <activity
             android:name=".ui.producto.ProductoActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.perfil.PerfilActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

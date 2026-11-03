@@ -6,6 +6,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 object RetrofitCliente {
 
@@ -19,6 +20,11 @@ object RetrofitCliente {
 
     private fun crear(sesion: SesionManager): ApiService {
         val http = OkHttpClient.Builder()
+            // Login puede tardar más que una consulta normal; evita el timeout prematuro.
+            .connectTimeout(20, TimeUnit.SECONDS)
+            .readTimeout(90, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .callTimeout(100, TimeUnit.SECONDS)
             // Agrega Accept: application/json y el token Bearer si hay sesion
             .addInterceptor { cadena ->
                 val peticion = cadena.request().newBuilder()
@@ -29,7 +35,7 @@ object RetrofitCliente {
             }
             .addInterceptor(
                 HttpLoggingInterceptor().apply {
-                    level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
+                    level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BASIC
                     else HttpLoggingInterceptor.Level.NONE
                 }
             )

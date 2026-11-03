@@ -1,7 +1,7 @@
 package com.example.comprasegura.ui.auth
 
-import android.content.Intent
 import android.os.Bundle
+import android.content.Intent
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -11,8 +11,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.comprasegura.MainActivity
 import com.example.comprasegura.databinding.ActivityRegisterBinding
+import com.example.comprasegura.ui.perfil.PerfilActivity
 import kotlinx.coroutines.launch
 import android.widget.Toast
 import com.example.comprasegura.util.PasswordGenerator
@@ -32,15 +32,12 @@ class RegisterActivity : AppCompatActivity() {
             insets
         }
 
-        // Botón volver al catálogo
+        // Regresa al perfil que abrió el registro.
         binding.botonVolver.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            startActivity(intent)
             finish()
         }
 
-        // Enlace a Login (si vino desde el login se regresa a el)
+        // Regresa al Login que abrió el registro.
         binding.botonIrALogin.setOnClickListener {
             finish()
         }
@@ -77,15 +74,21 @@ class RegisterActivity : AppCompatActivity() {
                     binding.textoError.text = estado.error
                     binding.textoError.visibility = if (estado.error != null) View.VISIBLE else View.GONE
 
-                    // Registro exitoso → volvemos al catálogo ya logueados
+                    // Registro exitoso: vuelve al perfil con la sesión ya iniciada.
                     if (estado.exito) {
-                        val intent = Intent(this@RegisterActivity, MainActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                        startActivity(intent)
-                        finish()
+                        volverAlPerfil()
                     }
                 }
             }
         }
     }
+
+    private fun volverAlPerfil() {
+        val intent = Intent(this, PerfilActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        }
+        startActivity(intent)
+        finish()
+    }
+
 }

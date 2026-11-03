@@ -1,121 +1,356 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_primary"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
-    <!-- ==================== TOP BAR ==================== -->
-
+    <!-- Encabezado -->
     <LinearLayout
         android:id="@+id/topBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
         android:background="@color/dark_primary"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="16dp"
-        android:paddingVertical="12dp"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Logo -->
         <ImageView
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:contentDescription="Logo"
-            android:src="@drawable/ic_cart" />
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_cart"
+            app:tint="@color/white" />
 
-        <!-- Nombre de la app -->
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="9dp"
             android:layout_weight="1"
             android:text="@string/app_name"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
-        <!-- Botón de sesión (iniciar y cerrar sesion) -->
-        <Button
-            android:id="@+id/botonSalir"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/primary"
-            android:minHeight="36dp"
-            android:paddingHorizontal="16dp"
-            android:text="@string/cerrar_sesion"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:cornerRadius="8dp" />
     </LinearLayout>
-    <!-- ==================== BUSCADOR ==================== -->
 
-    <EditText
-        android:id="@+id/campoBuscar"
+    <!-- Buscador -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/contenedorBuscar"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:background="@drawable/bg_search"
-        android:drawableStart="@drawable/ic_search"
-        android:drawablePadding="8dp"
-        android:hint="@string/catalogo_buscar"
-        android:imeOptions="actionSearch"
-        android:inputType="text"
-        android:maxLines="1"
-        android:padding="14dp"
-        android:textColor="@color/text_primary"
-        android:textColorHint="@color/text_secondary"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="52dp"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="10dp"
+        app:boxBackgroundColor="@color/white"
+        app:boxBackgroundMode="filled"
+        app:boxCornerRadiusBottomEnd="9dp"
+        app:boxCornerRadiusBottomStart="9dp"
+        app:boxCornerRadiusTopEnd="9dp"
+        app:boxCornerRadiusTopStart="9dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/ic_search"
+        app:endIconContentDescription="@string/catalogo_buscar"
+        app:hintEnabled="false"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topBar" />
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/campoBuscar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/catalogo_buscar"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingStart="14dp"
+            android:paddingEnd="8dp"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_secondary"
+            android:textSize="13sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- ==================== LISTA DE PRODUCTOS ==================== -->
+    <!-- Categorías -->
+    <HorizontalScrollView
+        android:id="@+id/scrollCategorias"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/dark_secondary"
+        android:fillViewport="false"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/contenedorBuscar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listaProductos"
+        <LinearLayout
+            android:id="@+id/contenedorChipsCategorias"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp" />
+    </HorizontalScrollView>
+
+    <!-- Contenido desplazable -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/contenidoHome"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="18dp"
         android:clipToPadding="false"
-        android:paddingHorizontal="16dp"
-        android:paddingBottom="16dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/scrollCategorias"
+        app:layout_constraintBottom_toTopOf="@id/barraNavegacion"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/campoBuscar"
-        tools:listitem="@layout/item_producto" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- ==================== PROGRESO ==================== -->
-    <ProgressBar
-        android:id="@+id/progreso"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="20dp">
 
-    <!-- ==================== MENSAJE VACIO/ERROR ==================== -->
-    <TextView
-        android:id="@+id/textoMensaje"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="24dp"
+            <!-- Banner promocional -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="112dp"
+                app:cardBackgroundColor="#E4E4E4"
+                app:cardCornerRadius="9dp"
+                app:cardElevation="1dp"
+                app:strokeWidth="0dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Ofertas especiales"
+                        android:textColor="@color/dark_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginBottom="7dp"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="5dp"
+                            android:layout_height="5dp"
+                            android:layout_margin="2dp"
+                            android:background="@drawable/bg_dot_selected" />
+
+                        <View
+                            android:layout_width="5dp"
+                            android:layout_height="5dp"
+                            android:layout_margin="2dp"
+                            android:background="@drawable/bg_dot" />
+
+                        <View
+                            android:layout_width="5dp"
+                            android:layout_height="5dp"
+                            android:layout_margin="2dp"
+                            android:background="@drawable/bg_dot" />
+
+                        <View
+                            android:layout_width="5dp"
+                            android:layout_height="5dp"
+                            android:layout_margin="2dp"
+                            android:background="@drawable/bg_dot" />
+                    </LinearLayout>
+                </FrameLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Título de productos -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="8dp"
+                android:text="Promociones en electrónica"
+                android:textColor="@color/dark_primary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <!-- Lista de productos -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listaProductos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                tools:listitem="@layout/item_producto"
+                tools:itemCount="4" />
+
+            <ProgressBar
+                android:id="@+id/progreso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textoMensaje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:gravity="center"
+                android:textColor="@color/text_secondary"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <!-- BARRA DE NAVEGACIÓN INFERIOR -->
+    <LinearLayout
+        android:id="@+id/barraNavegacion"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:background="#26292B"
+        android:elevation="8dp"
         android:gravity="center"
-        android:textColor="@color/text_secondary"
-        android:visibility="gone"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- INICIO -->
+        <LinearLayout
+            android:id="@+id/navInicio"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/iconoInicio"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:src="@drawable/ic_nav_home"
+                android:contentDescription="Inicio"
+                app:tint="#5F7ADB" />
+
+            <TextView
+                android:id="@+id/textoInicio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Inicio"
+                android:textColor="#5F7ADB"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- CATEGORÍAS -->
+        <LinearLayout
+            android:id="@+id/navCategorias"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/iconoCategorias"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:src="@drawable/ic_nav_categorias"
+                android:contentDescription="Categorías"
+                app:tint="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/textoCategorias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Categorías"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <!-- CARRITO -->
+        <LinearLayout
+            android:id="@+id/navCarrito"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/iconoCarrito"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:src="@drawable/ic_nav_cart"
+                android:contentDescription="Carrito"
+                app:tint="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/textoCarrito"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Carrito"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <!-- PERFIL -->
+        <LinearLayout
+            android:id="@+id/navPerfil"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/iconoPerfil"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:src="@drawable/ic_nav_profile"
+                android:contentDescription="Perfil"
+                app:tint="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/textoPerfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Perfil"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

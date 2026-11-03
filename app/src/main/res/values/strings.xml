@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Amastore</string>
 
     <!-- Login -->
@@ -7,11 +9,16 @@
     <string name="login_password">Contraseña</string>
     <string name="login_entrar">Entrar</string>
 
-    <!-- Catalogo -->
+    <!-- Catálogo -->
     <string name="catalogo_buscar">Buscar productos</string>
     <string name="catalogo_vacio">No hay productos que coincidan.</string>
     <string name="catalogo_vendedor">Vendido por %1$s</string>
-    <string name="cerrar_sesion">Cerrar sesión</string>
 
+    <!-- Sesión -->
+    <string name="cerrar_sesion">Cerrar sesión</string>
+    <string name="iniciar_sesion">Iniciar sesión</string>
+
+    <!-- Errores -->
     <string name="error_generico">Ocurrió un error. Intenta de nuevo.</string>
+
 </resources>

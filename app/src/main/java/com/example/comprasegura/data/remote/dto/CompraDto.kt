@@ -1,28 +1,5 @@
 package com.example.comprasegura.data.remote.dto
 
-// DTOs del flujo de compra. Se completan conforme la API implemente cada endpoint.
-
-data class AgregarAlCarritoPeticion(
-    val id_producto: Long,
-    val cantidad: Int,
-)
-
-data class CambiarCantidadPeticion(
-    val cantidad: Int,
-)
-
-data class CarritoItemDto(
-    val id: Long,
-    val cantidad: Int,
-    val producto: ProductoDto,
-)
-
-data class CarritoDto(
-    val id: Long,
-    val items: List<CarritoItemDto>,
-    val total: String,
-)
-
 data class DireccionDto(
     val id: Long? = null,
     val destinatario: String,
